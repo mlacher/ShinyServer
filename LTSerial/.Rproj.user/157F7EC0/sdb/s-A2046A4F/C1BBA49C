@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "#\n# This is the user-interface definition of a Shiny web application. You can\n# run the application by clicking 'Run App' above.\n#\n# Find out more about building applications with Shiny here:\n#\n#    http://shiny.rstudio.com/\n#\n\nlibrary(shiny)\n\n# Define UI for application that draws a histogram\nshinyUI(fluidPage(\n\n  # Application title\n  #titlePanel(\"Old Faithful Geyser Data\"),\n  sidebarLayout(\n\n    # Sidebar panel for inputs ----\n    sidebarPanel(\n\n           actionButton(\"start\", label = \"Start\", width = '30%'),\n           actionButton(\"pause\", label = \"Pause\", width = '30%'),\n           actionButton(\"stop\", label = \"Stop\", width = '30%'),\n           h3(\"Breaths\"),\n           verbatimTextOutput(\"value3\"),\n           # Copy the line below to make a slider bar\n           sliderInput(\"slider1\", label = h4(\"Inh. Time\"), min = 0.1,\n                       max = 10, value = 0.1),\n\n           # Copy the line below to make a slider bar\n           sliderInput(\"slider1\", label = h4(\"Exh. Time\"), min = 0.1,\n                       max = 10, value = 0.1))\n\n    ,\n  mainPanel(\n    tabsetPanel(type = \"tabs\",\n                tabPanel(\"Current Breath\", plotOutput(\"plot\")),\n                tabPanel(\"Summary\", verbatimTextOutput(\"summary\")),\n                tabPanel(\"Table\", tableOutput(\"table\"))\n    )\n\n  )\n\n  )\n))\n",
+    "created" : 1522762009892.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2048788501",
+    "id" : "C1BBA49C",
+    "lastKnownWriteTime" : 1522930466,
+    "last_content_update" : 1522930466707,
+    "path" : "~/LifeTimeUI/ui.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
