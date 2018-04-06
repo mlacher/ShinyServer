@@ -25,13 +25,9 @@ if (RWout == 20)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
-
   st <- reactiveValues(flag = 0, Breath  = 0)
-
   observeEvent(input$start, {
-
        st$flag <- 1
-
  })
 
   observeEvent(input$stop, {
@@ -53,14 +49,15 @@ shinyServer(function(input, output) {
      }
   })
 
-  output$value3 <- renderPrint({ st$Breath})
-  output$plot <- renderPlot({plot(st$Data$Time, st$Data$RotSpeed )})
-  output$summary <- renderPrint({summary(st$Data)})
-  output$table <- renderTable({data })
 
-  eventReactive(st$Wait,{
-    st$Wait<- 0
-    st$flag<-1
-  })
+
+    output$value3 <- renderPrint({ st$Breath})
+    output$plot <- renderPlot({plot(st$Data$Time, st$Data$RotSpeed )})
+    output$summary <- renderPrint({summary(st$Data)})
+    output$table <- renderTable({data
+      st$Wait<- 0
+      st$flag<-1})
+
+
 
 })
