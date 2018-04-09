@@ -14,8 +14,9 @@
 #   Test Package:              'Ctrl + Shift + T'
 
 ##open port
+library(serial)
 Open_Serial <- function (COMPort){
-  library(serial)
+
   con <- serialConnection(name = "Arduino",
                           port = COMPort,
                           mode = "9600,n,8,1",
@@ -34,6 +35,7 @@ Close_serial <- function(con){
 
 #read/write from port
 RW_Serial <- function (DEV_ADDR, CMD){
+  read.serialConnection(DEV_ADDR)
   write.serialConnection(DEV_ADDR, CMD)
   stopTime <- Sys.time() + 5
   while(Sys.time() < stopTime)
@@ -41,7 +43,7 @@ RW_Serial <- function (DEV_ADDR, CMD){
     data<-read.serialConnection(DEV_ADDR)
     if(nchar(data)>0){
       send <- as.numeric(data)
-      stopTime<-Sys.time()
+      break
     }
     else{
       send <- 0
@@ -50,9 +52,9 @@ RW_Serial <- function (DEV_ADDR, CMD){
   return(send)
 }
 #read from port
-R_Serial <- function (DEV_ADDR){
+R_Serial <- function (DEV_ADDR, Delay){
 Raw_data <- ""
-stopTime <- Sys.time() + 6
+stopTime <- Sys.time() + Delay
   while(Sys.time() < stopTime)
   {
   newText <- read.serialConnection(DEV_ADDR)
@@ -63,6 +65,9 @@ stopTime <- Sys.time() + 6
   }
  return(Raw_data)
 }
+
+
+
 #Meas_Data
 Meas_Data<- function(RawFile){
   RawFile<- na.omit(as.numeric(unlist(strsplit(RawFile, "[\n;]"))))

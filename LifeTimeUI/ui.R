@@ -29,8 +29,8 @@ shinyUI(fluidPage(
                        max = 10, value = 0.1),
 
            # Copy the line below to make a slider bar
-           sliderInput("slider1", label = h4("Exh. Time"), min = 0.1,
-                       max = 10, value = 0.1))
+           sliderInput("slider2", label = h4("Exh. Time"), min = 1,
+                       max = 10, value = 3))
 
     ,
   mainPanel(
