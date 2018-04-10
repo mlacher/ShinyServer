@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\nlibrary(shiny)\nlibrary(LTSerial)\nlibrary(serial)\n\nDevice<-Open_Serial(\"COM31\")\n\nshinyServer(function(input, output, session) {\n\n  st <- reactiveValues(flag = 0,\n                       Breath  = 0,\n                       Data1 = 0)\n\n  observeEvent(input$start,{st$flag<-1\n  st$ExhTime<- input$slider2\n  st$InhTime<-input$slider1\n  st$TotTime<-st$ExhTime+st$InhTime})\n  observeEvent(input$pause,{st$flag<-0})\n  observeEvent(input$stop,{st$Breath<-0\n                             st$flag<-0})\n\n  observe({\n    if(st$flag==1){\n      invalidateLater(st$TotTime*1000)\n    isolate({\n      print(st$ExhTime)\n      InhTimec<- as.character( (st$InhTime*10)+255+1)\n      RWout1<-RW_Serial(Device,InhTimec)\n      RWout2<-RW_Serial(Device,'517')\n      Rout <- R_Serial(Device, ceiling(st$TotTime))\n      st$Data <- Meas_Data(Rout)\n      st$Data1 <- cbind(st$Data1,st$Data$RotSpeed)\n      print(st$InhTime)\n      st$Breath<-st$Breath+1})}\n  })\n\n  output$value3 <- renderPrint({ st$Breath})\n  output$plot <- renderPlot({plot(st$Data$Time, st$Data$RotSpeed)})\n  output$summary <- renderPrint({summary(st$Data)})\n  output$table <- renderTable({\n    st$Data1})\n\n})\n\n",
+    "created" : 1523285409620.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "428126643",
+    "id" : "9523668F",
+    "lastKnownWriteTime" : 1523364846,
+    "last_content_update" : 1523364846566,
+    "path" : "C:/Users/maximilian.lacher/Documents/GitHub/R_Shares/ShinyServer/LifeTimeUI/server.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
