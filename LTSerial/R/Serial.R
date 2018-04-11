@@ -54,14 +54,17 @@ RW_Serial <- function (DEV_ADDR, CMD){
 #read from port
 R_Serial <- function (DEV_ADDR, Delay){
 Raw_data <- ""
-stopTime <- Sys.time() + Delay
-  while(Sys.time() < stopTime)
+i<-0
+
+  while (i < (Delay/0.05))
   {
   newText <- read.serialConnection(DEV_ADDR)
     if(0 < nchar(newText))
     {
     Raw_data <- paste(Raw_data, newText)
     }
+  Sys.sleep(0.05)
+  i = i+1
   }
  return(Raw_data)
 }

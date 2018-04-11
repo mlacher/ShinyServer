@@ -169,21 +169,6 @@ void loop() {
     }
 
   md.setM1Speed(0);   
-//  while (i < lCycles){
-//  Serial.print(lCycles);
-//  Serial.print(";");
-//  Serial.print(Time_Array[i]);
-//  Serial.print(";");
-//  Serial.print(Flow_Array[i]);
-//  Serial.print(";");
-//  Serial.print(Pres_Array[i]);
-//  Serial.print(";");
-//  Serial.print(Rot_Array[i]);
-//  Serial.print(";");
-//  Serial.print(cError);
-//  Serial.println(";");
-//  i++;
-//  }
   cError = 0;
   bytes[0] =0x00;
   break;

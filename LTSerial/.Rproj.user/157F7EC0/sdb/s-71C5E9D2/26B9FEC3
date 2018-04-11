@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\n\n#\n# Libraries\n\nClose_serial()\n\n#\n# Script\n#\n#rm(list = ls())         # Remove environemnent variables\n#graphics.off()          # Close any open graphics\n#---------functions----------\n##open port\nOpen_Serial <- function (COMPort){\nlibrary(serial)\ncon <- serialConnection(name = \"Arduino\",\n                        port = \"COM31\",\n                        mode = \"9600,n,8,1\",\n                        buffering = \"none\",\n                        newline = 1,\n                        translation = \"cr\")\n\nopen(con)\nreturn(con)\n}\n\n##close port\nClose_serial <- function(con){\nclose(con)\n}\n\n#read/write from port\nRW_Serial <- function (DEV_ADDR, CMD){\n  write.serialConnection(DEV_ADDR, CMD)\n  stopTime <- Sys.time() + 5\n  while(Sys.time() < stopTime)\n  {\n  data<-read.serialConnection(DEV_ADDR)\n    if(nchar(data)>0){\n    send <- as.numeric(data)\n    stopTime<-Sys.time()\n    }\n    else{\n    send <- 0\n    }\n  }\n  return(send)\n}\n\n#Meas_Data\nMeas_Data<- function(RawFile){\n  RawFile<- na.omit(as.numeric(unlist(strsplit(RawFile, \"[\\n;]\"))))\n  Breaths<-RawFile[seq(1, length(RawFile), 6)]\n  Time<-RawFile[seq(2, length(RawFile), 6)]\n  Flow<-RawFile[seq(3, length(RawFile), 6)]\n  Pressure<-RawFile[seq(4, length(RawFile), 6)]\n  RotSpeed<-RawFile[seq(5, length(RawFile), 6)]\n  Error<-RawFile[seq(6, length(RawFile), 6)]\n  Values<- cbind.data.frame(Time,Flow,Pressure,RotSpeed,Error)\n  return(Values)\n}\n\n#-------------------------end functions--------------------------\nRW_Serial(con,'517')\n\nstopTime <-3.1\nRaw_data <- \"\"\ni <-0\nwhile (i < (stopTime/0.05))\n{\n  newText <- read.serialConnection(con)\n  if(0 < nchar(newText))\n  {\n    Raw_data <- paste(Raw_data, newText)\n  }\n  Sys.sleep(0.05)\n  i = i+1\n}\n\n\n",
+    "created" : 1522762099944.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2794914490",
+    "id" : "26B9FEC3",
+    "lastKnownWriteTime" : 1523443016,
+    "last_content_update" : 1523443016794,
+    "path" : "X:/30 Entwicklungsprojekte/Produktfamilien/FOX/01 EP 5401 - FOX MOBILE/04 Drafts - to be deleted after release/MaL/LABVIEW/LV FOX Breath Simulator/03_Software/04 R Code/firstTest.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

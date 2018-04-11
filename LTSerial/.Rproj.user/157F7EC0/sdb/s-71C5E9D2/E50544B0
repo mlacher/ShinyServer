@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(readxl)\nlibrary(psych)\nlibrary(ggplot2)\nlibrary(ggpubr)\nlibrary(grid)\nlibrary(cowplot)\nPilotBuild <- read_excel(\"C:/Users/maximilian.lacher/Documents/GitHub/R_Shares/R_GGStat/333043930_protocol.xlsx\", \n                         sheet = \"Gauting Head Data\", col_types = c(\"text\", \n                                                               \"text\", \"numeric\", \"numeric\", \"numeric\", \n                                                               \"numeric\", \"numeric\", \"numeric\", \n                                                               \"numeric\", \"numeric\", \"numeric\"))\n\nPilotBuild <- na.omit(PilotBuild)\n\"darkturquoise\"\n\n\ndes<-describe(PilotBuild$`Min Frequency Tube`)\n\n#1 ---------------------check for normal distribution-----------------------------------------\n#skew pos = distribution skewed to left side, neg = distribution skewed to right side\n# kurtosis pos = distribution thin and steep, neg = wide and flat\n\nhisto<-ggplot(PilotBuild, aes(x=`Min Frequency Tube`))+\n  geom_histogram(colour=\"white\", fill= \"deepskyblue3\", aes(y= ..density..))+\n  geom_density(alpha = 0.1, colour = \"black\", aes(y= ..density..))+\n  #geom_point(aes(x=des$mean,y=0),size = 7, shape =3)+\n  theme_bw()+\n  theme(panel.background = element_rect(fill = NA),\n    panel.grid = element_blank(),\n    panel.grid.major.y = element_line(colour = \"White\"),\n    panel.grid.minor.y = element_line(colour = \"White\"),\n    panel.ontop = TRUE)+scale_color_brewer(palette = \"Set2\")+\n  annotate(\"text\", x = des$mean+2*des$sd, y = 0.00065, label = paste(\"n=\", sep = \"\", des$n))+\n  xlim(87000,90000)\n\n#2 boxplot\n\nbxplot<-ggplot(PilotBuild, aes(y=`Min Frequency Tube`, x = \"plot\"))+\n  geom_boxplot(fill=\"deepskyblue3\")+\n  theme_bw()+\n  ylim(87000,90000)+\n  coord_flip()\n\n#1/2 combination plot\nwindows()\nggarrange(histo,bxplot, heights = c(2, 0.5),\n          ncol = 1, nrow = 2, align = \"v\")\n\n#3 qq plot\nqq<-qplot(sample = PilotBuild$`Min Frequency Tube`, stat=\"qq\")\n\n\n\n\n\n\npnt <- ggplot(PilotBuild, aes(x=`Min Frequency Tube`, y =`Min Frequency Mem`))+\n  geom_point()+\n  geom_smooth(method = \"lm\", se = T, colour = \"deepskyblue3\", alpha=0.3)+\n  theme_bw()\n\npnt\n\n",
+    "created" : 1523454181256.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "17812367",
+    "id" : "E50544B0",
+    "lastKnownWriteTime" : 1519987398,
+    "last_content_update" : 1519987398,
+    "path" : "C:/Users/maximilian.lacher/Documents/GitHub/R_Shares/R_GGStat/ggStat.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
